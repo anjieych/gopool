@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-var GlobalTimerPool TimerPool
+var GlobalTimerpool Timerpool
 
 // ErrScheduleTimeout returned by Grpool to indicate that there no free
 // goroutines during some period of time.
@@ -48,7 +48,7 @@ func (p *Grpool) Schedule(task func()) {
 // ScheduleTimeout schedules task to be executed over pool's workers.
 // It returns ErrScheduleTimeout when no free workers met during given timeout.
 func (p *Grpool) ScheduleTimeout(timeout time.Duration, task func()) error {
-	return p.schedule(task, GlobalTimerPool.Get(timeout).C)
+	return p.schedule(task, GlobalTimerpool.Get(timeout).C)
 }
 
 func (p *Grpool) schedule(task func(), timeout <-chan time.Time) error {
